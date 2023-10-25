@@ -14,7 +14,6 @@ namespace OrderingFood.Areas.Admin.Controllers
     {
         private readonly FoodieContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly User? currUser;
 
         public HomeController(FoodieContext context, IHttpContextAccessor httpContextAccessor)
         {
@@ -29,10 +28,6 @@ namespace OrderingFood.Areas.Admin.Controllers
             //if already login
             if (adminExist != null)
             {
-                //set view name on profile
-                ViewBag.Name = HttpContext.Session.GetString("NameCurrUser"); 
-                //enable header and slider layout
-                ViewBag.AdminExist = adminExist;
                 //render home with header and slider
                 return View();
             }
@@ -46,19 +41,19 @@ namespace OrderingFood.Areas.Admin.Controllers
 
 
         }
+        //logout
         public IActionResult Logout()
         {
             Response.Cookies.Delete("AdminExist");
             return Redirect("Login");
         }
+
+        //sign up
         public IActionResult Register()
         {
            
             return View();
         }
-        
-        
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("Name,Mobile,Address,Email,Password,TypeAccount")] User _user)
@@ -74,15 +69,22 @@ namespace OrderingFood.Areas.Admin.Controllers
                     _user.UserId = Guid.NewGuid();
                     _user.CreatedDate = DateTime.Now;
                     _user.TypeAccount = "Admin";
-                    //add new user in db
-                    _context.Users.Add(_user);
-                    await _context.SaveChangesAsync();
 
-                    CookieOptions options = new CookieOptions();
-                    options.Expires = DateTime.Now.AddSeconds(3000);
-                    Response.Cookies.Append("AdminExist", "True", options);
-
-                    return RedirectToAction("Index");
+                    if(_user.TypeAccount == "newadmin")
+                    {
+                        //add new user in db
+                        _context.Users.Add(_user);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        ViewBag.error = "Mã cấp quyền không chính xác !";
+                        return View();
+                    }
+                    
+                    
+                    //sign up successfully
+                    return RedirectToAction("Login");
                 }
                 else
                 {
@@ -114,14 +116,15 @@ namespace OrderingFood.Areas.Admin.Controllers
             {*/
                 //find the admin in db
                 var data = await _context.Users.FirstOrDefaultAsync(s => s.Email!.Equals(_user.Email) && s.Password!.Equals(_user.Password) && s.TypeAccount!.Equals("Admin"));
-            //if admin exist
+                //if admin exist
                 if (data != null)
                 {
-
-                HttpContext.Session.SetString("NameCurrUser", data.Name);
+                    //set session
+                    HttpContext.Session.SetString("NameCurrUser", data!.Name);
                     HttpContext.Session.SetString("IdCurrUser", data!.UserId.ToString());
 
-                CookieOptions options = new CookieOptions();
+                    //set cookie to render header and slider bar
+                    CookieOptions options = new CookieOptions();
                     options.Expires = DateTime.Now.AddSeconds(3000);
                     Response.Cookies.Append("AdminExist", "True", options);
 
