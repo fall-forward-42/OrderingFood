@@ -1,0 +1,55 @@
+﻿
+@model OrderingFood.Models.User
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+<div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+            <div class="col-md-8 col-lg-6 col-xxl-3">
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                            <img src="~/assets/images/logos/dark-logo.svg" width="180" alt="">
+                        </a>
+                        <p class="text-center">Nhà Hàng Khoa Tiến</p>
+                        <form asp-action="Login">
+                            @if (ViewBag.error != null)
+                            {
+                                <div class="text-danger">@ViewBag.error</div>
+                            }
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label"></label>
+                                <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" asp-for="Email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Password" class="form-label"></label>
+                                <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" asp-for="Password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            
+
+                            <div class="">
+                                <input type="submit" value="Đăng Nhập" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"/>
+                            </div>
+
+
+                        </form>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="fs-4 mb-0 fw-bold">Chưa có tài khoản ? </p>
+                            <a class="text-primary fw-bold ms-2" asp-action="Register">Đăng ký ngay tại đây !</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
