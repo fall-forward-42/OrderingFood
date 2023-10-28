@@ -28,6 +28,7 @@ namespace OrderingFood.Models
 
         [Required(ErrorMessage = "Vui lòng nhập địa chỉ !"), DisplayName("Địa chỉ")]
         public string? Address { get; set; }
+
         public string? ImageUrl { get; set; }
         public DateTime? CreatedDate { get; set; }
 

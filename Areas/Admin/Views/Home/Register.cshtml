@@ -15,8 +15,7 @@
                         <form asp-action="Register">
                             @if (ViewBag.error!=null)
                             {
-                                var error = ViewBag.error;
-                                <div class="text-danger">@error</div>
+                                <div class="text-danger">@ViewBag.error</div>
                             }
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="mb-3">

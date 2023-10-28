@@ -1,28 +1,14 @@
 ﻿@model IEnumerable<OrderingFood.Models.User>
 
 @{
-    ViewData["Title"] = "Danh sách khách hàng";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-        
+    ViewData["Title"] = "Index";
 }
 
-<h1 class="text-uppercase font-weight-bold">Danh sách các khách hàng</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Tạo mới thông tin khách hàng</a>
+    <a asp-action="Create">Create New</a>
 </p>
-  
-
-<form asp-action="Index" >
-    <div class="input-group ">
-        <div class="form-outline col-lg-4 col-sm-8">
-            <input type="search" id="inputToString" name="inputToString" class="form-control" placeholder="Tìm kiếm"/>
-        </div>
-        <button type="submit" class="btn btn-primary ">
-            <i class="ti ti-search fs-6"></i>
-        </button>
-    </div>
-</form>
 <table class="table">
     <thead>
         <tr>
@@ -81,16 +67,11 @@
                 @Html.DisplayFor(modelItem => item.TypeAccount)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Chỉnh sửa</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Xen chi tiết</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Xóa</a>
+                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

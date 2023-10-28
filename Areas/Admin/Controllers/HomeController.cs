@@ -68,10 +68,11 @@ namespace OrderingFood.Areas.Admin.Controllers
                 {
                     _user.UserId = Guid.NewGuid();
                     _user.CreatedDate = DateTime.Now;
-                    _user.TypeAccount = "Admin";
+                    
 
-                    if(_user.TypeAccount == "newadmin")
+                    if(_user.TypeAccount=="newadmin")
                     {
+                        _user.TypeAccount = "Admin";
                         //add new user in db
                         _context.Users.Add(_user);
                         await _context.SaveChangesAsync();

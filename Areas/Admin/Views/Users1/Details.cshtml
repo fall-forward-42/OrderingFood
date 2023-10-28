@@ -1,14 +1,13 @@
 ﻿@model OrderingFood.Models.User
 
 @{
-    ViewData["Title"] = "Chi tiết khách hàng";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-
+    ViewData["Title"] = "Details";
 }
 
-<h1>Chi tiết khách hàng</h1>
+<h1>Details</h1>
 
 <div>
+    <h4>User</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -62,6 +61,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.UserId">Chỉnh sửa thông tin</a> |
-    <a asp-action="Index">Trở về</a>
+    <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>
