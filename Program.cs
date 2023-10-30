@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OrderingFood.Data;
+using OrderingFood.Interfaces;
+using OrderingFood.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +18,14 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromSeconds(10);
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddTransient<IBufferedFileUploadService, BufferedFileUploadLocalService>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+//run the bulider
 var app = builder.Build();
 
+//help to injected into the controller
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

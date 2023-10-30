@@ -1,0 +1,60 @@
+﻿@model IEnumerable<OrderingFood.Models.Category>
+
+@{
+    ViewData["Title"] = "Danh sách danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; ;
+}
+
+<h1 class="text-uppercase font-weight-bold">Danh sách các loại món ăn</h1>
+
+<p>
+    <a asp-action="Create">Tạo mới thông tin loại món</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.CategoryId">Chỉnh sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.CategoryId">Xen chi tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CategoryId">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
