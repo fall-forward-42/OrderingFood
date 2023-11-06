@@ -1,0 +1,90 @@
+﻿@model IEnumerable<OrderingFood.Models.Product>
+
+@{
+    ViewData["Title"] = "Danh sách món ăn";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h1 class="text-uppercase font-weight-bold">Danh sách các món ăn</h1>
+
+<p>
+    <a asp-action="Create">Tạo mới món ăn</a>
+</p>
+
+<form asp-action="Index">
+    <div class="input-group ">
+        <div class="form-outline col-lg-4 col-sm-8">
+            <input type="search" id="inputToString" name="inputToString" class="form-control" placeholder="Tìm kiếm món ăn" />
+        </div>
+        <button type="submit" class="btn btn-primary ">
+            <i class="ti ti-search fs-6"></i>
+        </button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categories!.Name)
+            </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId">Chỉnh sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductId">Xen chi tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Xóa</a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

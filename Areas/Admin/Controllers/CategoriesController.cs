@@ -71,7 +71,7 @@ namespace OrderingFood.Areas.Admin.Controllers
             {
                 category.CategoryId = Guid.NewGuid();
                 category.CreatedDate = DateTime.Now;
-                category.IsActive = true;
+                category.IsActive = "Còn cung ứng";
                
                string fileNameByCateName = _bufferedFileUploadService.GenerateSlug(category.Name) + Path.GetExtension(file.FileName);
 
@@ -129,14 +129,8 @@ namespace OrderingFood.Areas.Admin.Controllers
                 try
                 {
                     category.CreatedDate = DateTime.Now;
-                    if (Request.Form["IsActiveList"]==true)
-                    {
-                        category.IsActive = true;
-                    }
-                    else
-                    {
-                        category.IsActive = false;
-                    }
+
+                  
 
                     string fileNameByCateName = _bufferedFileUploadService.GenerateSlug(category.Name) + Path.GetExtension(file.FileName);
 
@@ -145,16 +139,17 @@ namespace OrderingFood.Areas.Admin.Controllers
                     {
                         category.ImageUrl = fileNameByCateName;
                         //can upload and save the img
+                        _context.Update(category);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {
                         //error to upload or save
                         ModelState.AddModelError("ImageUrl", "Không thể tải hoặc lưu hình ảnh đã chọn !");
-                        return View();
+                        return View(category);
                     }
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    
             }
                 catch (DbUpdateConcurrencyException)
                 {

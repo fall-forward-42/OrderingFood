@@ -18,7 +18,7 @@ namespace OrderingFood.Models
         [ DisplayName("Hình ảnh")]
         public string? ImageUrl { get; set; }
         [DisplayName("Cung ứng")]
-        public bool? IsActive { get; set; }
+        public string? IsActive { get; set; }
         [ DisplayName("Ngày tạo")]
         public DateTime? CreatedDate { get; set; }
 
