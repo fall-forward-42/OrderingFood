@@ -1,0 +1,49 @@
+﻿@model OrderingFood.Models.Bill
+
+@{
+    ViewData["Title"] = "Lập hóa đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h1>Lập hóa đơn</h1>
+
+<h4>Tạo mới</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-4">
+                <label  class="control-label">Tổng tiền</label>
+                <div class="form-control">@ViewData["TotalBillString"]</div>
+                <input value="@ViewData["TotalBill"]   />
+            </div>
+            <div class="form-group mb-4">
+                <label class="control-label">Khách hàng</label>
+                <div class="form-control">@ViewData["CustomerName"]</div>
+                <input value="@ViewData["CustomerId"]"/>
+            </div>
+            <div class="form-group mb-4">
+                <label class="control-label">Nhân viên tạo hóa đơn</label>
+                <div class="form-control">@ViewData["EmployeeName"]</div>
+                <input value="@ViewData["EmployeeId"]" />
+            </div>
+            @if (ViewData["Error"] != null)
+            {
+                <p class="text-danger">ViewBag["Error"] </p>
+            }
+            <div class="form-group mb-4">
+                <input type="submit" value="Tạo mới" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a  asp-controller="Carts" asp-action="Index">Trở về đơn hàng</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

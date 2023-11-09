@@ -1,0 +1,98 @@
+﻿@model IEnumerable<OrderingFood.Models.Bill>
+
+@{
+    ViewData["Title"] = "Xử lý đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h1>Danh sách đơn hàng cần xử lý</h1>
+
+<p>
+    <a  asp-controller="Carts" asp-action="Index">Tiếp tục xử lý đơn</a>
+</p>
+
+<form asp-action="HandlePackage">
+    <div class="input-group ">
+        <div class="form-outline col-lg-4 col-sm-8">
+            <input type="search" id="inputToString" name="inputToString" class="form-control" placeholder="Tìm kiếm đơn hàng" />
+        </div>
+        <button type="submit" class="btn btn-primary ">
+            <i class="ti ti-search fs-6"></i>
+        </button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                Khách hàng
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Address)
+            </th>
+            <th>
+                Nhân viên thanh toán
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (item.Status == "Chưa thanh toán")
+                {
+                    <td class="text-danger">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                }
+                else
+                {
+                    <td class="text-success">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                }
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriceToVND)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Mobile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Name)
+                </td>
+                <td class="d-flex">
+                    <div class="btn btn-primary">
+                        <a asp-action="Details" asp-route-id="@item.BillId" class="text-light">Xem</a> 
+                    </div>
+                    <div class="btn btn-danger">
+                        <a asp-action="Delete" asp-route-id="@item.BillId" class="text-light">Xóa</a>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

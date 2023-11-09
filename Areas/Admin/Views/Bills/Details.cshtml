@@ -1,0 +1,107 @@
+﻿@model OrderingFood.Models.Bill
+
+
+
+@{
+    ViewData["Title"] = "Chi tiết hóa đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h1>Chi tiết hóa đơn </h1>
+
+<div>
+    <h4>Hóa đơn</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        @if(Model.Status == "Chưa thanh toán")
+        {
+            <dd class="col-sm-10 ">
+                <h5 class="text-danger font-weight-bold">
+                    @Html.DisplayFor(model => model.Status)
+                </h5>
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                <h5 class="text-success font-weight-bold"> @Html.DisplayFor(model => model.Status)</h5>
+            </dd>
+        }
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+        <dd class="col-sm-10 font-weight-bold">
+            @Html.DisplayFor(model => model.PriceToVND)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.Mobile)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Mobile)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Employee.Name)
+        </dd>
+    </dl>
+    <hr />
+        <h4>Sản phẩm đã mua</h4>
+        <dl class="row">
+            @foreach (var item in ViewBag.productsHaveBought as ICollection<OrderingFood.Models.Cart>)
+            {
+                <dt class="col-sm-2">
+                    Tên món ăn
+                </dt>
+                <dd class="col-sm-10">
+                    @item.Product.Name
+                </dd>
+            <dt class="col-sm-2">
+                Giá tiền
+            </dt>
+                <dd class="col-sm-10">
+                    @item.Product.PriceToVND
+                </dd>
+            <dt class="col-sm-2">
+                Số lượng
+            </dt>
+                <dd class="col-sm-10">
+                    @item.Quantity
+                </dd>
+            <hr />
+            }
+
+
+        </dl>
+    
+
+    
+</div>
+<div>
+    <a asp-action="ConfirmBill" asp-route-id="@Model?.BillId">Xác nhận thanh toán</a> |
+    <a asp-action="Index">Trở về</a>
+</div>

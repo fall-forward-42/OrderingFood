@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
+using System.Security.Policy;
 
 namespace OrderingFood.Models
 {
@@ -21,6 +22,7 @@ namespace OrderingFood.Models
         public string? Description { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập giá tiền !"), DisplayName("Giá món ăn")]
         public Decimal? Price { get; set; }
+    
         [Required(ErrorMessage = "Vui lòng nhập số lượng !"), DisplayName("Số lượng")]
         public int? Quantity { get; set; }
         [DisplayName("Hình ảnh món ăn")]
@@ -34,5 +36,11 @@ namespace OrderingFood.Models
         public virtual Category? Categories { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<DetailsBill> DetailsBills { get; set; }
+
+        public string PriceToVND
+        {
+            get => string.Format("{0:C}", Price) +" VNĐ";
+        }
+
     }
 }

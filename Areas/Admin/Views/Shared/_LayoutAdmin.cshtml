@@ -55,17 +55,31 @@
                                     <span class="hide-menu">Dashboard</span>
                                 </a>
                             </li>
+                            @*đặt hàng*@
                             <li class="nav-small-cap">
                                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                                <span class="hide-menu">Tác vụ quản lý</span>
+                                <span class="hide-menu">Tác vụ đơn hàng</span>
                             </li>
                             <li class="sidebar-item">
-                                <a class="sidebar-link" asp-controller="Bills" asp-action="ShowOrder" aria-expanded="false">
+                                <a class="sidebar-link" asp-controller="Carts" asp-action="Index" aria-expanded="false">
                                     <span>
                                         <i class="ti ti-article"></i>
                                     </span>
                                     <span class="hide-menu">Đơn đặt hàng</span>
                                 </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" asp-controller="Bills" asp-action="HandlePackage" aria-expanded="false">
+                                    <span>
+                                        <i class="ti ti-file-description"></i>
+                                    </span>
+                                    <span class="hide-menu">Xử lý đơn hàng</span>
+                                </a>
+                            </li>
+                           @* tác vụ quản lý*@
+                            <li class="nav-small-cap">
+                                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                                <span class="hide-menu">Tác vụ quản lý</span>
                             </li>
                             <li class="sidebar-item">
                                 <a class="sidebar-link" asp-controller="Users" asp-action="Index" aria-expanded="false">
@@ -107,7 +121,21 @@
                                     <span class="hide-menu">Thông tin hóa đơn</span>
                                 </a>
                             </li>
-                            
+
+                            @*Doanh thu*@
+                            <li class="nav-small-cap">
+                                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                                <span class="hide-menu">Doanh thu</span>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" asp-controller="Bills" asp-action="RevenueBill" aria-expanded="false">
+                                    <span>
+                                        <i class="ti ti-article"></i>
+                                    </span>
+                                    <span class="hide-menu">Doanh thu chính</span>
+                                </a>
+                            </li>
+                            @*tài khoản*@
                             <li class="nav-small-cap">
                                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                                 <span class="hide-menu">Tài khoản</span>

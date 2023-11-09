@@ -233,5 +233,12 @@ namespace OrderingFood.Areas.Admin.Controllers
         {
           return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
         }
+
+
+        public string convertToVND(Decimal dem)
+        {
+            return string.Format("{0:C}", dem) + "VNĐ";
+        }
     }
+    
 }

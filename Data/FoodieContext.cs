@@ -54,6 +54,13 @@ namespace OrderingFood.Data
                     .WithMany(p => p.Bills)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_Bills_UserId_Users");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Bills)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_EmployeeId_UserId_Users");
+
+                
             });
 
             modelBuilder.Entity<Cart>(entity =>
@@ -69,6 +76,11 @@ namespace OrderingFood.Data
                     .WithMany(p => p.Carts)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_Carts_UserId_Users");
+
+                entity.HasOne(d => d.Bill)
+                    .WithMany(p => p.Carts)
+                    .HasForeignKey(d => d.BillId)
+                    .HasConstraintName("FK_Carts_BillId_Bills");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -99,7 +111,7 @@ namespace OrderingFood.Data
                 entity.Property(e => e.Subject).HasMaxLength(200);
             });
 
-            modelBuilder.Entity<DetailsBill>(entity =>
+            /*modelBuilder.Entity<DetailsBill>(entity =>
             {
                 entity.ToTable("DetailsBill");
 
@@ -114,7 +126,7 @@ namespace OrderingFood.Data
                     .WithMany(p => p.DetailsBills)
                     .HasForeignKey(d => d.ProductId)
                     .HasConstraintName("FK_DetailsBill_ProductId_Products");
-            });
+            });*/
 
             modelBuilder.Entity<Payment>(entity =>
             {

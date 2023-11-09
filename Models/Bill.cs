@@ -9,7 +9,7 @@ namespace OrderingFood.Models
     {
         public Bill()
         {
-            DetailsBills = new HashSet<DetailsBill>();
+            Carts = new HashSet<Cart>();
         }
         public Guid BillId { get; set; }
         [ DisplayName("Trạng thái")]
@@ -20,7 +20,18 @@ namespace OrderingFood.Models
         public DateTime? CreatedDate { get; set; }
         [DisplayName("Khách hàng")]
         public Guid? UserId { get; set; }
+        
+        [DisplayName("Nhân viên tạo đơn")]
+        public Guid? EmployeeId { get; set; }
+
         public virtual User? User { get; set; }
-        public virtual ICollection<DetailsBill> DetailsBills { get; set; }
+        public virtual User? Employee { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
+
+
+        public string PriceToVND
+        {
+            get => string.Format("{0:C}", Total) + " VNĐ";
+        }
     }
 }

@@ -45,6 +45,9 @@ namespace OrderingFood.Areas.Admin.Controllers
         public IActionResult Logout()
         {
             Response.Cookies.Delete("AdminExist");
+            Response.Cookies.Delete("IdAdmin");
+            Response.Cookies.Delete("NameAdmin");
+
             return Redirect("Login");
         }
 
@@ -120,17 +123,25 @@ namespace OrderingFood.Areas.Admin.Controllers
                 //if admin exist
                 if (data != null)
                 {
-                    //set session
-                    HttpContext.Session.SetString("NameCurrUser", data!.Name);
-                    HttpContext.Session.SetString("IdCurrUser", data!.UserId.ToString());
+                    
 
                     //set cookie to render header and slider bar
                     CookieOptions options = new CookieOptions();
-                    options.Expires = DateTime.Now.AddSeconds(3000);
+                    options.Expires = DateTime.Now.AddSeconds(30000);
                     Response.Cookies.Append("AdminExist", "True", options);
 
-                    //return to home with already login
-                    return RedirectToAction("Index");
+                    CookieOptions options2 = new CookieOptions();
+                    options2.Expires = DateTime.Now.AddSeconds(30000);
+                    Response.Cookies.Append("NameAdmin", data.Name.ToString(), options2);
+
+                    CookieOptions options3 = new CookieOptions();
+                    options3.Expires = DateTime.Now.AddSeconds(30000);
+                    Response.Cookies.Append("IdAdmin", data.UserId.ToString(), options3);
+
+
+
+                //return to home with already login
+                return RedirectToAction("Index");
                }
                 else
                 {

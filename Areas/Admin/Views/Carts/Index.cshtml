@@ -1,0 +1,71 @@
+﻿@model IEnumerable<OrderingFood.Models.Cart>
+
+@{
+    ViewData["Title"] = "Danh sách giỏ hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h1>Danh sách giỏ hàng</h1>
+
+<h3 class="">@ViewData["TotalCart"]</h3>
+
+@if (ViewData["CustomerChoosen"]=="True")
+{
+    <div class="btn btn-primary mb-4 "><a asp-action="Create" class="text-light">Thêm món ăn</a></div>
+
+    <div class="btn btn-primary mb-4 text-light"><a asp-controller="Bills" asp-action="CreateBillNotPay" class="text-light">Lập hóa đơn cho đơn này</a></div>
+
+}
+
+<form asp-action="Index" >
+    <div class="input-group ">
+        <select name="UserId" id="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+        <input type="submit" value="Tìm" class="btn btn-primary"/>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.PriceToVND)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem =>item.Quantity)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Name)
+            </td>
+            <td>
+                  
+                <a asp-action="Edit" asp-route-id="@item.CartId">Chỉnh</a> |
+                <a asp-action="Delete" asp-route-id="@item.CartId">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
