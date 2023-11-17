@@ -1,30 +1,42 @@
 ﻿@model IEnumerable<OrderingFood.Models.Bill>
 
 @{
-    ViewData["Title"] = "Xử lý đơn hàng";
+    ViewData["Title"] = "Doanh thu";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
-<h1>Danh sách đơn hàng cần xử lý</h1>
+<h1>Thông tin doanh thu</h1>
 
-<p class="btn btn-success">
-    <a  asp-controller="Carts" asp-action="Index" class="text-light">Tiếp tục xử lý đơn</a>
-</p>
 
-<form asp-action="HandlePackage">
+<form asp-action="RevenueBill" class="mt-4">
     <div class="input-group ">
-        <div class="form-outline col-lg-4 col-sm-8">
-            <input type="search" id="inputToString" name="inputToString" class="form-control" placeholder="Tìm kiếm đơn hàng" />
-        </div>
+       @* <div class="form-outline col-lg-4 col-sm-8 mr-2">
+            <input type="date"  name="dateRevenue" class="form-control" placeholder="Chọn thời gian" />
+        </div>*@
+        <input type="number" class="form-control" name="dayR" placeholder="Chọn ngày"/>
+        <input type="number" class="form-control" name="monthR" placeholder="Chọn tháng" />
+        <input type="number" class="form-control" name="yearR" placeholder="Chọn năm" />
+
         <button type="submit" class="btn btn-primary ">
+            Tìm kiếm doanh thu theo ngày 
             <i class="ti ti-search fs-6"></i>
         </button>
     </div>
 </form>
+<div class="btn btn-primary mt-4" id="Export-to-pdf">Xuất file PDF</div>
+
+<div id="bill-revenue-content" class="mt-5">
+@if (ViewData["DateToRevenue"] != null)
+{
+    <h2>Doanh thu trong thời gian  @ViewData["DateToRevenue"]</h2>
+}
 <table class="table">
     <thead>
         <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BillId)
+                </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
@@ -51,9 +63,14 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+                
+                    <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.BillId" id="details-revenue"  style="width: 50%; overflow: hidden; text-overflow: ellipsis;"> @Html.DisplayFor(modelItem => item.BillId)</a>
+                    </td>
                 @if (item.Status == "Chưa thanh toán")
                 {
+                   
                     <td class="text-danger">
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
@@ -66,7 +83,7 @@
                 }
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.PriceToVND)
+                      @Html.DisplayFor(modelItem => item.PriceToVND)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedDate)
@@ -83,18 +100,34 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Employee.Name)
                 </td>
-                <td class="d-flex justify-content-between ">
-                    <div class="btn btn-primary ">
-                        <a asp-action="Details" asp-route-id="@item.BillId" class="text-light">Xem</a> 
-                    </div>
-
-
-                    <div class="btn btn-danger">
-                        <a asp-action="Delete" asp-route-id="@item.BillId" class="text-light">Xóa</a>
-                    </div>
-
-                </td>
+               
             </tr>
+                
         }
     </tbody>
 </table>
+@if (ViewData["TotalBills"] != null)
+{
+    <h3>@ViewData["TotalBills"]</h3>
+    
+}
+else
+{
+    <h3>Tìm kiếm hóa đơn để tính tổng doanh thu</h3>
+}
+</div>
+@section scripts {
+    <script>
+        $("#Export-to-pdf").click(function () {
+            var element = document.getElementById('bill-revenue-content');
+            var opt = {
+                margin: 1,
+                image: { type: 'jpeg', quality: 0.98 },
+                pagebreak: { avoid: 'tr' },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' },
+                filename: 'doanhthu_' + '@ViewData["DateToRevenue"]' + '.pdf',
+            };
+            html2pdf().set(opt).from(element).save();
+        });
+    </script>
+}

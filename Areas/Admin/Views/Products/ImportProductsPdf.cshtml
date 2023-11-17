@@ -6,26 +6,17 @@
 
 }
 
-<h1 class=" font-weight-bold">Danh sách các món ăn</h1>
+<h1 class="text-uppercase font-weight-bold">Danh sách các món ăn thêm bằng file Excel</h1>
 
-
-
-<form asp-action="Index">
-    <div class="input-group ">
-        <div class="form-outline col-lg-4 col-sm-8">
-            <input type="search" id="inputToString" name="inputToString" class="form-control" placeholder="Tìm kiếm món ăn" />
+<form asp-action="ImportProductsPdf" enctype="multipart/form-data" class="d-flex ">
+        <div class="form-outline ">
+            <input type="file" name="file" class="form-control " />
         </div>
-        <button type="submit" class="btn btn-primary ">
-            <i class="ti ti-search fs-6"></i>
-        </button>
-    </div>
+    <button type="submit" class="btn btn-primary  text-center"  >
+        Chọn file để thêm các món ăn
+    </button>
 </form>
-<button type="submit" class="btn btn-primary mt-4">
-    <a asp-action="ImportProductsPdf" class="text-light">Tải File Excel để thêm món ăn</a>
-</button>
-<p class="btn btn-secondary">
-    <a asp-action="Create" class=" text-light">Tạo mới món ăn</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -51,39 +42,40 @@
                 @Html.DisplayNameFor(model => model.CreatedDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Categories.Name)
+                @Html.DisplayNameFor(model => model.Categories)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem =>item.PriceToVND)
-            </td>   
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categories!.Name)
-            </td>
-                <td >
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categories!.Name)
+                </td>
+                <td>
                     <div class="btn btn-primary mb-2 ">
                         <a asp-action="Edit" asp-route-id="@item.ProductId" class="text-light">Chỉnh</a>
                     </div>
@@ -94,7 +86,7 @@
                         <a asp-action="Delete" asp-route-id="@item.ProductId" class="text-light">Xóa</a>
                     </div>
                 </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

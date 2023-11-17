@@ -1,17 +1,17 @@
 ﻿@model OrderingFood.Models.User
 
 @{
-    ViewData["Title"] = "Chỉnh sửa";
+    ViewData["Title"] = "Tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
-<h1>Chỉnh sửa</h1>
+<h1>Chỉnh sửa thông tin tài khoản</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UserId" />
             <div class="form-group mb-4">
@@ -31,7 +31,7 @@
             </div>
             <div class="form-group  mb-4">
                 <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
+                <input asp-for="ImageUrl" type="file" name="file" class="form-control" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group  mb-4">
@@ -41,7 +41,7 @@
             </div>
             <div class="form-group  mb-4">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control bg-info text-light" readonly />
+                <input asp-for="Password" class="form-control bg-info text-light" readonly/>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group  mb-4 ">
@@ -62,6 +62,7 @@
 </div>
 
 <div>
+    <a asp-action="ChangePasswordForUser" asp-route-id="@Model?.UserId">Thay đổi mật khẩu</a> |
     <a asp-action="Index">Trở về</a>
 </div>
 

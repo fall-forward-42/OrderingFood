@@ -8,7 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <Content Remove="Areas\Admin\Views\Shared\_CDN.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Areas\Admin\Views\Shared\_CDN.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFCore.BulkExtensions" Version="6.7.16" />
+    <PackageReference Include="EPPlus" Version="6.2.12" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="Lucene.Net" Version="3.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.24" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.23">
       <PrivateAssets>all</PrivateAssets>
@@ -20,6 +33,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.33.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.2-mauipre.1.22102.15" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @*@using OrderingFood.Models*@
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor httpContextaccessor
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +34,7 @@
                 <div>
                     <div class="brand-logo d-flex align-items-center justify-content-between">
                         <a asp-controller="Home" asp-action="Index" class="text-nowrap logo-img">
-                            <img src="~/assets/images/logos/dark-logo.svg" width="180" alt="" />
+                            <img src="~/assets/images/logos/main-logo.jpg" width="180" alt="" />
                         </a>
                         <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                             <i class="ti ti-x fs-8"></i>
@@ -52,7 +52,7 @@
                                     <span>
                                         <i class="ti ti-layout-dashboard"></i>
                                     </span>
-                                    <span class="hide-menu">Dashboard</span>
+                                    <span class="hide-menu">Trang chủ</span>
                                 </a>
                             </li>
                             @*đặt hàng*@
@@ -63,7 +63,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" asp-controller="Carts" asp-action="Index" aria-expanded="false">
                                     <span>
-                                        <i class="ti ti-article"></i>
+                                        <i class="ti ti-package"></i>
                                     </span>
                                     <span class="hide-menu">Đơn đặt hàng</span>
                                 </a>
@@ -84,7 +84,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" asp-controller="Users" asp-action="Index" aria-expanded="false">
                                     <span>
-                                        <i class="ti ti-article"></i>
+                                        <i class="ti ti-user"></i>
                                     </span>
                                     <span class="hide-menu">Khách hàng</span>
                                 </a>
@@ -92,7 +92,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" asp-controller="Categories" asp-action="Index" aria-expanded="false">
                                     <span>
-                                        <i class="ti ti-alert-circle"></i>
+                                        <i class="ti ti-clipboard"></i>
                                     </span>
                                     <span class="hide-menu">Danh mục món ăn</span>
                                 </a>
@@ -100,7 +100,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" asp-controller="Products" asp-action="Index" aria-expanded="false">
                                     <span>
-                                        <i class="ti ti-alert-circle"></i>
+                                        <i class="ti ti-gift"></i>
                                     </span>
                                     <span class="hide-menu">Món ăn</span>
                                 </a>
@@ -108,7 +108,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" asp-controller="Contacts" asp-action="Index" aria-expanded="false">
                                     <span>
-                                        <i class="ti ti-cards"></i>
+                                        <i class="ti ti-world"></i>
                                     </span>
                                     <span class="hide-menu">Liên lạc riêng tư</span>
                                 </a>
@@ -116,11 +116,10 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" asp-controller="Bills" asp-action="Index" aria-expanded="false">
                                     <span>
-                                        <i class="ti ti-file-description"></i>
+                                        <i class="ti ti-receipt"></i>
                                     </span>
                                     <span class="hide-menu">Thông tin hóa đơn</span>
                                 </a>
-                            </li>
 
                             @*Doanh thu*@
                             <li class="nav-small-cap">
@@ -130,7 +129,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link" asp-controller="Bills" asp-action="RevenueBill" aria-expanded="false">
                                     <span>
-                                        <i class="ti ti-article"></i>
+                                        <i class="ti ti-printer"></i>
                                     </span>
                                     <span class="hide-menu">Doanh thu chính</span>
                                 </a>
@@ -149,7 +148,7 @@
                                 </a>
                             </li>
                             <li class="sidebar-item">
-                                <a class="sidebar-link" asp-controller="Home" asp-action="ShowProfileUser" aria-expanded="false">
+                                <a class="sidebar-link" asp-controller="Users" asp-action="ShowAdminProfile" aria-expanded="false">
                                     <span>
                                         <i class="ti ti-user-plus"></i>
                                     </span>
@@ -200,13 +199,13 @@
                                         <div class="message-body">
                                             <div  class="d-flex align-items-center gap-2 dropdown-item">
                                                 <i class="ti ti-user fs-6"></i>
-                                                <p class="mb-0 fs-3">@Context.Session.GetString("NameCurrUser")</p>
+                                                <p class="mb-0 fs-3">@Context.Request.Cookies["NameAdmin"]</p>
                                             </div>
-                                            <a asp-controller="User" asp-action="ShowProfile" class="d-flex align-items-center gap-2 dropdown-item">
+                                            <a asp-controller="Users" asp-action="ShowAdminProfile" class="d-flex align-items-center gap-2 dropdown-item">
                                                 <i class="ti ti-mail fs-6"></i>
                                                 <p class="mb-0 fs-3">Tài khoản của tôi</p>
                                             </a>
-                                            <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                                            <a asp-controller="Bills" asp-action="HandlePackage" class="d-flex align-items-center gap-2 dropdown-item">
                                                 <i class="ti ti-list-check fs-6"></i>
                                                 <p class="mb-0 fs-3">Nhiệm vụ</p>
                                             </a>
@@ -235,11 +234,13 @@
             <div class="">
                 <main role="main" class="">
                     @RenderBody()
+                    
                 </main>
+               
             </div>
         }
 
-        
+       
 
 
     </div>
@@ -254,6 +255,8 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @*convert html to pdf*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

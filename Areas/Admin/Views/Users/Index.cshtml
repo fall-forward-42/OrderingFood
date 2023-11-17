@@ -75,16 +75,22 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+                    @Html.DisplayFor(modelItem => item.EncodedPassword)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TypeAccount)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Chỉnh sửa</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Xen chi tiết</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Xóa</a>
-            </td>
+                <td>
+                    <div class="btn btn-primary mb-2 ">
+                        <a asp-action="Edit" asp-route-id="@item.UserId" class="text-light">Chỉnh</a>
+                    </div>
+                    <div class="btn btn-primary  mb-2 bg-info">
+                        <a asp-action="Details" asp-route-id="@item.UserId" class="text-light">Xem</a>
+                    </div>
+                    <div class="btn btn-primary  mb-2 bg-danger">
+                        <a asp-action="Delete" asp-route-id="@item.UserId" class="text-light">Xóa</a>
+                    </div>
+                </td>
         </tr>
 }
     </tbody>

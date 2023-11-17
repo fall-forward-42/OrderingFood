@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using OrderingFood.Data;
 using OrderingFood.Interfaces;
 using OrderingFood.Models;
 
 namespace OrderingFood.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class ProductsController : Controller
     {
@@ -22,7 +27,72 @@ namespace OrderingFood.Areas.Admin.Controllers
         {
             _context = context;
             _bufferedFileUploadService = bufferedFileUploadService;
+        }
 
+
+        //hiển thị danh sách
+        public  IActionResult ImportProductsPdf()
+        {
+            var products = new List<Product>();
+            return View(products);
+        }
+
+        //upload pdf and save products
+        [HttpPost]
+        public async Task<IActionResult> ImportProductsPdf(IFormFile file)
+        {
+            if(file == null)
+            {
+                return NotFound();
+            }
+            var fileExtension = Path.GetExtension(file.FileName);
+            if (!fileExtension.ToLower().Equals(".xlsx"))
+            {
+                return NotFound();
+
+            }
+
+
+            var list = new List<Product>();
+            using ( var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+
+                using(ExcelPackage package = new ExcelPackage(stream))
+                {
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+                    var rowcount = workSheet.Dimension.Rows;
+                    for(int row = 2;row<= rowcount; row++)
+                    {
+                       
+                        
+                        //create new Product()
+                        list.Add(new Product
+                        {
+                            ProductId = Guid.NewGuid(),
+                            Name = workSheet.Cells[row, 1].Value.ToString().Trim(),
+                            Description = workSheet.Cells[row, 2].Value.ToString().Trim(),
+                            Price = Convert.ToDecimal(workSheet.Cells[row, 3].Value) ,
+                            Quantity = Convert.ToInt32(workSheet.Cells[row, 4].Value) ,
+                            IsActive = "Còn cung ứng",
+                            CreatedDate = DateTime.Now,
+
+                        });
+
+                    }
+
+
+                }
+            }
+            
+            //save in db
+            foreach (Product item in list)
+            {
+                _context.Add(item);
+            }
+            await _context.SaveChangesAsync();
+
+            return View(list);
         }
 
         // GET: Admin/Products
@@ -31,13 +101,14 @@ namespace OrderingFood.Areas.Admin.Controllers
             var foodieContext = _context.Products.Include(p => p.Categories);
             return View(await foodieContext.ToListAsync());
         }
-        // POST: Admin/Products/inputToSearch
+        
+        //search input
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(string inputToString)
         {
 
-            var data = await _context.Products.Where(e => e.Name!.Contains(inputToString)).Include(p => p.Categories).ToListAsync();
+            var data = await _context.Products.Where(e => e.Name!.Contains(inputToString) || e.Description!.Contains(inputToString) || e.Categories!.Name!.Contains(inputToString) || e.IsActive!.Contains(inputToString)).Include(p => p.Categories).ToListAsync();
 
 
             if (data != null)

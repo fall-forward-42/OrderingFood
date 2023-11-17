@@ -1,6 +1,8 @@
 ﻿@model OrderingFood.Models.User
 @{
     ViewData["Title"] = "Đăng ký";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
 }
 <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
     <div class="d-flex align-items-center justify-content-center w-100">
@@ -9,52 +11,58 @@
                 <div class="card mb-0">
                     <div class="card-body">
                         <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                            <img src="~/assets/images/logos/dark-logo.svg" width="180" alt="">
+                            <img src="~/assets/images/logos/main-logo.jpg" width="180" alt="">
                         </a>
-                        <p class="text-center">Your Social Campaigns</p>
-                        <form asp-action="Register">
-                            @if (ViewBag.error!=null)
-                            {
-                                <div class="text-danger">@ViewBag.error</div>
-                            }
+                        <h2 class="text-center">Đăng ký</h2>
+
+
+                        <form asp-controller="Home" asp-action="Register">
+                            
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="mb-3">
                                 <label asp-for="Name" class="form-label"></label>
-                                <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" asp-for="Name">
+                                <input  class="form-control" asp-for="Name">
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="Address" class="form-label"></label>
-                                <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" asp-for="Address">
+                                <input  class="form-control"  asp-for="Address">
                                 <span asp-validation-for="Address" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="Mobile" class="form-label"></label>
-                                <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" asp-for="Mobile">
+                                <input  class="form-control"  asp-for="Mobile">
                                 <span asp-validation-for="Mobile" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="Email" class="form-label"></label>
-                                <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" asp-for="Email">
+                                <input  class="form-control" asp-for="Email" type="email">
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="Password" class="form-label"></label>
-                                <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" asp-for="Password">
+                                <input  class="form-control" asp-for="Password" >
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" >Mã truy cập</label>
-                                <input asp-for="TypeAccount"  type="text" class="form-control" id="adminAllowInput" aria-describedby="textHelp">
+                                <label asp-for="TypeAccount" class="form-label"></label>
+                                <input asp-for="TypeAccount"  class="form-control" >
                                 <span asp-validation-for="TypeAccount" class="text-danger"></span>
                             </div>
-
+                            @if (ViewBag.error != null)
+                            {
+                                <div class="text-danger">@ViewBag.error</div>
+                            }
                             <div class="">
                                 <input type="submit" value="Đăng ký" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" />
                             </div>
 
                             
                         </form>
+
+
+
+
                         <div class="d-flex align-items-center justify-content-center">
                             <p class="fs-4 mb-0 fw-bold">Đã có tài khoản ?</p>
                             <a class="text-primary fw-bold ms-2" asp-action="Login">Đăng nhập</a>
@@ -68,5 +76,8 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+   
+
     }
 }

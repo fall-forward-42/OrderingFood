@@ -1,7 +1,4 @@
 ﻿@model OrderingFood.Models.Bill
-
-
-
 @{
     ViewData["Title"] = "Chi tiết hóa đơn";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,7 +7,7 @@
 
 <h1>Chi tiết hóa đơn </h1>
 
-<div>
+<div id="bill-content">
     <h4>Hóa đơn</h4>
     <hr />
     <dl class="row">
@@ -31,7 +28,6 @@
                 <h5 class="text-success font-weight-bold"> @Html.DisplayFor(model => model.Status)</h5>
             </dd>
         }
-
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Total)
         </dt>
@@ -101,7 +97,26 @@
 
     
 </div>
-<div>
-    <a asp-action="ConfirmBill" asp-route-id="@Model?.BillId">Xác nhận thanh toán</a> |
-    <a asp-action="Index">Trở về</a>
+<div class="btn btn-primary" >
+    @if(Model.Status=="Chưa thanh toán")
+    {
+        <a asp-action="ConfirmBill" asp-route-id="@Model?.BillId">Xác nhận thanh toán</a>
+    }
+    | <a asp-action="Index">Danh sách hóa đơn</a>
 </div>
+<div class="btn btn-primary" id="ExportToPdf">Xuất PDF</div>
+@section scripts {
+    <script>
+        $("#ExportToPdf").click(function(){
+            var element = document.getElementById('bill-content');
+            var opt = {
+                margin: 1,
+                image: { type: 'jpeg', quality: 0.98 },
+                pagebreak: { avoid: 'tr' },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+                filename: '@Html.DisplayFor(model => model.BillId)'+'.pdf'
+            };
+            html2pdf().set(opt).from(element).save();
+        });
+    </script>
+}

@@ -17,14 +17,16 @@ namespace OrderingFood.Models
         [DisplayName("Tổng tiền")]
         public Decimal? Total { get; set; }
         [DisplayName("Ngày lập")]
-        public DateTime? CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         [DisplayName("Khách hàng")]
         public Guid? UserId { get; set; }
         
         [DisplayName("Nhân viên tạo đơn")]
         public Guid? EmployeeId { get; set; }
 
+        [DisplayName("Khách hàng")]
         public virtual User? User { get; set; }
+        [DisplayName("Người xử lý")]
         public virtual User? Employee { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
 
@@ -32,6 +34,10 @@ namespace OrderingFood.Models
         public string PriceToVND
         {
             get => string.Format("{0:C}", Total) + " VNĐ";
+        }
+        public string CreateDateToString
+        {
+            get => CreatedDate.ToString("dd-mm-yyyy");
         }
     }
 }

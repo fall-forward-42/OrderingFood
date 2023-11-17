@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +13,7 @@ using OrderingFood.Models;
 
 namespace OrderingFood.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class BillsController : Controller
     {
@@ -20,18 +24,54 @@ namespace OrderingFood.Areas.Admin.Controllers
             _context = context;
         }
 
-        
+        //hiển thị doanh thu
+        public async Task<IActionResult> RevenueBill()
+        {
+           //ViewData["BillDate"] = new SelectList(_context.Bills, "CreatedDate", "CreatedDate");
+            var foodieContext = _context.Bills.Where(b => b.Status == "Đã thanh toán").Include(b => b.Employee).Include(b => b.User);
+            return View(await foodieContext.ToListAsync());
+        }
+       
 
+        [HttpPost]
+        public async Task<IActionResult> RevenueBill(int dayR, int monthR,int yearR)
+        {
+           /* string convert_dayR =  dayRevenue.ToString("dd-mm-yyyy");*/
+
+            var foodieContext = await _context.Bills.Where(b => b.Status == "Đã thanh toán" && b.CreatedDate.Day==dayR && b.CreatedDate.Month == monthR && b.CreatedDate.Year == yearR)
+                .Include(b => b.Employee).Include(b => b.User).ToListAsync();
+
+            decimal TotalBill = 0;
+            foreach (Bill b in foodieContext)
+            {
+                decimal thisTotal = Convert.ToDecimal(b.Total);
+                TotalBill += thisTotal;
+            }
+            ViewData["DateToRevenue"] = " ngày "+ dayR.ToString()+ " Tháng " + monthR.ToString()+" năm " + yearR.ToString();
+            ViewData["TotalBills"] = "Tổng tiền: " + string.Format("{0:C}", TotalBill) + " VNĐ";
+            return View(foodieContext);
+        }
+
+        //hiển thị các hóa đơn đã xử lý - tính doanh thu chọn tìm kiếm
         public async Task<IActionResult> Index()
         {
-            var foodieContext = _context.Bills.Include(b => b.Employee).Include(b => b.User);
+            var foodieContext = _context.Bills.Where(b => b.Status == "Đã thanh toán").Include(b => b.Employee).Include(b => b.User);
             return View(await foodieContext.ToListAsync());
         }
         [HttpPost]
         public async Task<IActionResult> Index(string inputToString)
         {
-            var foodieContext = _context.Bills.Where(b=>b.Status!.Contains(inputToString)  || b.User!.Name.Contains(inputToString) || b.Employee!.Name.Contains(inputToString)).Include(b => b.Employee).Include(b => b.User);
-            return View(await foodieContext.ToListAsync());
+            var foodieContext = await _context.Bills.Where(b => b.Status == "Đã thanh toán" && b.User!.Name.Contains(inputToString) || b.Employee!.Name.Contains(inputToString) || b.User!.Mobile.Contains(inputToString) || b.User!.Address.Contains(inputToString) || b.CreatedDate.ToString()!.Contains(inputToString))
+                .Include(b => b.Employee).Include(b => b.User).ToListAsync();
+            decimal TotalBill = 0;
+            foreach(Bill b in foodieContext)
+            {
+                decimal thisTotal = Convert.ToDecimal(b.Total);
+                TotalBill += thisTotal;
+            }
+
+            ViewData["TotalBills"] = "Tổng tiền: " + string.Format("{0:C}", TotalBill) + " VNĐ";
+            return View( foodieContext);
         }
 
         //hiển thị các bill cần xử lý đơn hàng
@@ -357,12 +397,19 @@ namespace OrderingFood.Areas.Admin.Controllers
             {
                 return Problem("Entity set 'FoodieContext.Bills'  is null.");
             }
-            var bill = await _context.Bills.FindAsync(id);
+
+            //remove bill and detailsbill
+            var bill = await _context.Bills.Where(b=>b.BillId==id).Include(b=>b.Carts).FirstOrDefaultAsync();
+
+
             if (bill != null)
             {
                 _context.Bills.Remove(bill);
             }
-            
+
+
+     
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

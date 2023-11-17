@@ -1,16 +1,12 @@
 ﻿@model IEnumerable<OrderingFood.Models.Bill>
 
 @{
-    ViewData["Title"] = "Hóa đơn";
+    ViewData["Title"] = "Danh sách hóa đơn";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
 <h1>Danh sách hóa đơn</h1>
-
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
 
 <form asp-action="Index">
     <div class="input-group ">
@@ -22,6 +18,8 @@
         </button>
     </div>
 </form>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -38,7 +36,13 @@
                 Khách hàng
             </th>
             <th>
-              Nhân viên thanh toán
+                @Html.DisplayNameFor(model => model.User.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Address)
+            </th>
+            <th>
+                Nhân viên thanh toán
             </th>
         </tr>
     </thead>
@@ -64,19 +68,32 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employee.Name)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Mobile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Name)
+                </td>
             <td>
                     <div class="btn btn-primary">
-                        <a asp-action="Details" asp-route-id="@item.BillId" class="text-light">Xem</a> |
-                        <a asp-action="Delete" asp-route-id="@item.BillId" class="text-light">Xóa</a>
+                        <a asp-action="Details" asp-route-id="@item.BillId" class="text-light">Xem</a>
                     </div>
             </td>
         </tr>
 }
     </tbody>
 </table>
+@if (ViewData["TotalBills"] != null)
+{
+    <h3>@ViewData["TotalBills"]</h3>
+}
+else
+{
+    <h3>Tìm kiếm hóa đơn để tính tổng doanh thu</h3>
+}

@@ -30,7 +30,7 @@
         <tr>
             
             <th>
-                @Html.DisplayNameFor(model => model.Product)
+                @Html.DisplayNameFor(model => model.Product.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product.Price)
@@ -39,7 +39,7 @@
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.User.Name)
             </th>
             <th></th>
         </tr>
@@ -61,9 +61,13 @@
                 @Html.DisplayFor(modelItem => item.User.Name)
             </td>
             <td>
-                  
-                <a asp-action="Edit" asp-route-id="@item.CartId">Chỉnh</a> |
-                <a asp-action="Delete" asp-route-id="@item.CartId">Xóa</a>
+                  <div cite="btn btn-primary">
+                        <a asp-action="Edit" asp-route-id="@item.CartId" class="text-light">Chỉnh</a>
+                    </div>
+                    <div cite="btn btn-danger">
+                        <a asp-action="Delete" asp-route-id="@item.CartId" class="text-light">Xóa</a>a>
+                    </div>
+                
             </td>
         </tr>
 }

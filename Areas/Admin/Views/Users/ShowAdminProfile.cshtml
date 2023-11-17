@@ -1,68 +1,70 @@
 ﻿@model OrderingFood.Models.User
 
 @{
-    ViewData["Title"] = "Chi tiết khách hàng";
+    ViewData["Title"] = "Tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-
 }
 
-<h1>Chi tiết khách hàng</h1>
+<h1>Thông tin tài khoản</h1>
 
 <div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Mobile)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Mobile)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Address)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Address)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ImageUrl)
         </dt>
-        <dd class = "col-sm-10">
-            <img src="/userImages/@Model.ImageUrl" alt="/userImages/@Model.ImageUrl" width="200" height="300" class="mt-4 mb-4">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ImageUrl)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreatedDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Password)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EncodedPassword)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Password)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TypeAccount)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TypeAccount)
         </dd>
     </dl>
 </div>
+
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.UserId">Chỉnh sửa thông tin</a> |
-    
+    <div class="btn btn-primary  mb-2 bg-danger">
+        <a asp-action="Edit" asp-route-id="@Model?.UserId">Chỉnh sửa thông tin</a> |
+    </div>
     <a asp-action="Index">Trở về</a>
 </div>
