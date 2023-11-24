@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="EFCore.BulkExtensions" Version="6.7.16" />
     <PackageReference Include="EPPlus" Version="6.2.12" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
@@ -35,6 +36,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.33.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.2-mauipre.1.22102.15" />
+    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -82,7 +82,7 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-nowrap" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
+                            <a class="nav-link text-nowrap" asp-area="Admin" asp-controller="Home" asp-action="Index">Quản lý</a>
                         </li>
                             <li class="nav-item">
                             <a class="nav-link text-nowrap" asp-area="" asp-controller="Food" asp-action="Index">Món ăn</a>
@@ -95,7 +95,8 @@
                         <a asp-area="" asp-controller="Account" asp-action="Login" class="user_link">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
-                        <a class="cart_link" asp-area="" asp-controller="Cart" asp-action="Index">
+
+                        <a class="cart_link"  asp-controller="Cart" asp-action="Index">
                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                 <g>
                                 <g>
@@ -281,5 +282,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("Notyf")
 </body>
 </html>

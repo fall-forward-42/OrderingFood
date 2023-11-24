@@ -1,0 +1,78 @@
+﻿@model IEnumerable<OrderingFood.Models.Cart>
+
+@{
+    ViewData["Title"] = "Danh sách giỏ hàng";
+    Layout = "_Layout";
+
+}
+
+<section class="food_section layout_padding container">
+
+<h1>Giỏ hàng</h1>
+
+<h3 class="">@ViewData["TotalCart"]</h3>
+
+
+<div class="btn btn-primary mb-4 text-light"><a asp-controller="Bills" asp-action="CreateBillNotPay" class="text-light">Lập hóa đơn cho đơn này</a></div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                 @Html.DisplayNameFor(model => model.Product.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                 <td>
+                     <img src="/productImages/@item.Product.ImageUrl" alt="" style="width: 100px; height: 100px">
+                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.PriceToVND)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem =>item.Quantity)
+                </td>
+                <td >
+                    <div class="d-flex">
+                            
+                            <form asp-action="UpdateQuantity">
+                                <input type="hidden" asp-for="@item.CartId" name="id" />
+                                <input type="number"  name="numberOf" />
+                                <input type="submit" value="Chỉnh" class="btn btn-primary" />
+                            </form>
+                           
+
+
+                            <form asp-action="Delete">
+                                <input type="hidden" asp-for="@item.CartId" name="id" />
+                                <input type="submit" value="Xóa" class="btn btn-danger" />
+                            </form>
+                    </div>
+                   
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+</section>

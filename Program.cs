@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
@@ -41,28 +42,13 @@ _builder.Services.AddTransient<IBufferedFileUploadService, BufferedFileUploadLoc
 _builder.Services.AddTransient<IJwtAuthenService, JwtAuthenService>();
 _builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-//jwt authen
-/*_builder.Services.AddAuthentication(options =>
+//toast
+_builder.Services.AddNotyf(cof =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(o =>
-{
-    o.SaveToken = true;
-    o.RequireHttpsMetadata = false;
-    o.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidIssuer = _builder.Configuration["JWT:Issuer"],
-        ValidAudience = _builder.Configuration["JWT:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey
-        (Encoding.UTF8.GetBytes(_builder.Configuration["JWT:Secret"])),
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-    };
-});*/
+    cof.DurationInSeconds = 10;
+    cof.IsDismissable = true;
+    cof.Position = NotyfPosition.BottomRight;
+});
 
 //authen with cookie
 _builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

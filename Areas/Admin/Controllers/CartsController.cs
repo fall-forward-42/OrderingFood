@@ -77,7 +77,6 @@ namespace OrderingFood.Areas.Admin.Controllers
                 var foodieContext = _context.Carts.Where(c => c.Status == "Chưa mua").Include(c => c.Product).Include(c => c.User);
                 ViewData["TotalCart"] = "Vui lòng chọn khách hàng để xem đơn đặt hàng";
                 return View(await foodieContext.ToListAsync());
-
             }
 
             
@@ -108,36 +107,10 @@ namespace OrderingFood.Areas.Admin.Controllers
                
             }
             return RedirectToAction("Index");
-            //show user has already selected
-            /*ViewData["UserId"] = new SelectList(_context.Users.Where(c => c.TypeAccount == "Customer"), "UserId", "Name",UserId);
-            //Tìm cart có user đã chọn và status chưa mua
-            var foodieContext = await _context.Carts.Where(c => c.Status == "Chưa mua" && c.UserId == UserId)
-                .Include(c => c.Product).Include(c => c.User)
-                .ToListAsync();
-            
-            return View(foodieContext);*/
+         
         }
 
 
-        // GET: Admin/Carts/Details/5
-        /*public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null || _context.Carts == null)
-            {
-                return NotFound();
-            }
-
-            var cart = await _context.Carts
-                .Include(c => c.Product)
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.CartId == id);
-            if (cart == null)
-            {
-                return NotFound();
-            }
-
-            return View(cart);
-        }*/
 
         // GET: Admin/Carts/Create
         public IActionResult Create()
