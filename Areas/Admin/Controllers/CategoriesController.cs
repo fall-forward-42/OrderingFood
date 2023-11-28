@@ -15,7 +15,7 @@ using OrderingFood.Models;
 
 namespace OrderingFood.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [Area("Admin")]
     public class CategoriesController : Controller
     {

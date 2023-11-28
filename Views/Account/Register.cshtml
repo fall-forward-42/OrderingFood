@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model OrderingFood.Models.User
 @{
     ViewData["Title"] = "Đăng ký";
 }
@@ -18,33 +16,47 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-8">
                     <h2 class="fw-bold mb-5">Đăng ký ngay</h2>
-                    <form>
+                    <form asp-controller="Account" asp-action="Register">
                         <!-- 2 column grid layout with text inputs for the first and last names -->
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-                                <div class="form-outline">
-                                    <label class="form-label" for="form3Example1">First name</label>
-                                    <input type="text" id="form3Example1" class="form-control" />
-                                </div>
+                        <div class="form-outline mb-4">
+                                <label asp-for="Name" class="form-label"></label>
+                                <input class="form-control" asp-for="Name">
+                                <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
-                            <div class="col-md-6 mb-4">
-                                <div class="form-outline">
-                                    <label class="form-label" for="form3Example2">Last name</label>
-                                    <input type="text" id="form3Example2" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form3Example3">Email address</label>
-                            <input type="email" id="form3Example3" class="form-control" />
+                            <label asp-for="Email" class="form-label"></label>
+                            <input class="form-control" asp-for="Email" type="email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form3Example4">Password</label>
-                            <input type="password" id="form3Example4" class="form-control" />
+                            <label asp-for="Password" class="form-label"></label>
+                            <input class="form-control" asp-for="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <!-- Password conf input -->
+                        <div class="form-outline mb-4">
+                            <label asp-for="ConfPassword" class="form-label"></label>
+                            <input class="form-control" asp-for="ConfPassword">
+                            <span asp-validation-for="ConfPassword" class="text-danger"></span>
+                        </div>
+
+                        <!-- address input -->
+                        <div class="form-outline mb-4">
+                            <label asp-for="Address" class="form-label"></label>
+                            <input class="form-control" asp-for="Address">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <!-- Mobile input -->
+                        <div class="form-outline mb-4">
+                            <label asp-for="Mobile" class="form-label"></label>
+                            <input class="form-control" asp-for="Mobile">
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
                         </div>
 
                         <!-- Checkbox -->
@@ -54,7 +66,10 @@
                                 Chấp nhận thông tin đã nhập chính xác.
                             </label>
                         </div>
-
+                        @if (ViewBag.error != null)
+                        {
+                            <div class="text-danger">@ViewBag.error</div>
+                        }
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-primary btn-block mb-4">
                             Đăng ký

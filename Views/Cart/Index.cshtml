@@ -7,14 +7,10 @@
 }
 
 <section class="food_section layout_padding container">
-
 <h1>Giỏ hàng</h1>
-
 <h3 class="">@ViewData["TotalCart"]</h3>
 
-
-<div class="btn btn-primary mb-4 text-light"><a asp-controller="Bills" asp-action="CreateBillNotPay" class="text-light">Lập hóa đơn cho đơn này</a></div>
-
+    <div class="btn btn-success mb-4 text-light"><a class="text-light" asp-controller="Cart" asp-action="CreateBillNotPay">Mua ngay</a></div>
 
 
 <table class="table">

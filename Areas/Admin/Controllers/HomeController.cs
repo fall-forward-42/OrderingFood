@@ -24,7 +24,6 @@ namespace OrderingFood.Areas.Admin.Controllers
     {
         private readonly FoodieContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        //private readonly WebApplicationBuilder _builder;
         private readonly IJwtAuthenService _JwtAuthenService;//inject interface into this
 
 
@@ -74,7 +73,6 @@ namespace OrderingFood.Areas.Admin.Controllers
             return View();
         }
         [AllowAnonymous]
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("Name,Mobile,Address,Email,Password,TypeAccount")] User user)

@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model OrderingFood.Models.User
 @{
     ViewData["Title"] = "Đăng nhập";
 }
@@ -16,25 +14,29 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-8">
                     <h2 class="fw-bold mb-5 text-center">Đăng nhập</h2>
-                    <form asp-action="Login">
+                    <form asp-controller="Account" asp-action="Login">
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form3Example3">Tên đăng nhập</label>
-                            <input type="email" id="form3Example3" class="form-control" />
+                            <label asp-for="Email" class="form-label"></label>
+                            <input class="form-control" asp-for="Email" type="email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form3Example4">Mật khẩu</label>
-                            <input type="password" id="form3Example4" class="form-control"/>
+                            <label asp-for="Password" class="form-label"></label>
+                            <input type="password" class="form-control" asp-for="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <p class="small mb-5 pb-lg-2"><a class="text-black-50" href="#!">Quên mật khẩu ?</a></p>
-
+                        @if (ViewBag.error != null)
+                        {
+                            <div class="text-danger">@ViewBag.error</div>
+                        }
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-primary btn-block mb-4">
                             Đăng nhập
                         </button>
-
                         <div>
                             <p class="mb-0 text-center">
                                 Chưa có tài khoản ? <a asp-area="" asp-controller="Account" asp-action="Register" class="text-black-50  fw-bold">Đăng ký ngay !</a>

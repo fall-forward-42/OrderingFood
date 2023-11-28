@@ -13,7 +13,7 @@ using OrderingFood.Models;
 
 namespace OrderingFood.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [Area("Admin")]
     public class BillsController : Controller
     {
@@ -205,7 +205,7 @@ namespace OrderingFood.Areas.Admin.Controllers
             return View(bill);
         }
 
-        //show hóa đơn mới tạo
+        //show hóa đơn mới tạo và xóa hết all món đã mua trong giỏ hàng
         public async Task<IActionResult> DetailsNotPay()
         {
             if (Request.Cookies["IdBill"] == null)
@@ -251,7 +251,7 @@ namespace OrderingFood.Areas.Admin.Controllers
 
         
 
-        //tạo mới hóa đơn cho đơn hàng chưa thanh toán
+        //tạo mới hóa đơn cho đơn hàng chưa thanh toán - giỏ hàng khách
         public IActionResult CreateBillNotPay()
         {
 

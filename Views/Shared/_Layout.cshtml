@@ -150,14 +150,26 @@
                   </g>
                 </svg>
                             </a>
-                            <form class="form-inline">
+                            @*<form class="form-inline">
                                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </button>
-                            </form>
-                        <a asp-area="" asp-controller="OrderFood" asp-action="Create" class="order_online text-nowrap">
-                                ĐẶT MÓN !
+                            </form>*@
+                        @if (Context.Request.Cookies["IdBillClient"] != null)
+                        {
+                            <a asp-controller="Cart" asp-action="DetailsNotPay" class="order_online text-nowrap">
+                              Xem đơn đã đặt
                             </a>
+                        }
+                        @if (Context.Request.Cookies["NameCustomerClient"]!=null) 
+                        {
+                           
+                            <a asp-controller="Account" asp-action="Logout" class="order_online text-nowrap">
+                              @Context.Request.Cookies["NameCustomerClient"] |
+                               Đăng xuất
+                            </a>
+                        }
+                      
                         </div>
                     </div>
                 </nav>

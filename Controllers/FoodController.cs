@@ -42,6 +42,8 @@ namespace OrderingFood.Controllers
             return View(products);
         }
 
+
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GetProductToCart(Guid? productId)
@@ -51,9 +53,13 @@ namespace OrderingFood.Controllers
                 return NotFound();
             }
             //get id customer cookie to render name of customer
+            if (Request.Cookies["IdCustomerClient"] == null)
+            {
+                return NotFound();
+            }
             //var idCustomer = new Guid(Request.Cookies["IdCustomer"]!);
                 Cart cart = new Cart();
-                var idCustomer = new Guid("374c3bc7-e148-4252-8cd9-9dbdea3352b0");
+                var idCustomer = new Guid(Request.Cookies["IdCustomerClient"]!);
 
                 cart.ProductId = productId;
                 cart.CartId = Guid.NewGuid();
