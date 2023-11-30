@@ -9,7 +9,7 @@ using System.Data;
 
 namespace OrderingFood.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Customer")]
     public class CartController : Controller
     {
         private readonly FoodieContext _context;

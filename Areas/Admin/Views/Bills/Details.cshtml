@@ -100,9 +100,9 @@
 <div class="btn btn-primary" >
     @if(Model.Status=="Chưa thanh toán")
     {
-        <a asp-action="ConfirmBill" asp-route-id="@Model?.BillId">Xác nhận thanh toán</a>
+        <a asp-action="ConfirmBill" asp-route-id="@Model?.BillId" class="text-light">Xác nhận thanh toán</a>
     }
-    | <a asp-action="Index">Danh sách hóa đơn</a>
+    | <a asp-action="Index" class="text-light">Danh sách hóa đơn</a>
 </div>
 <div class="btn btn-primary" id="ExportToPdf">Xuất PDF</div>
 @section scripts {
